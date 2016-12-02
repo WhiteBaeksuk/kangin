@@ -1,0 +1,260 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+function GetClock(){
+var d=new Date();
+var nhour=d.getHours(),nmin=d.getMinutes(),nsec=d.getSeconds(),ap;
+if(nhour==0){ap=" AM";nhour=12;}
+else if(nhour<12){ap=" AM";}
+else if(nhour==12){ap=" PM";}
+else if(nhour>12){ap=" PM";nhour-=12;}
+if(nmin<=9) nmin="0"+nmin;
+if(nsec<=9) nsec="0"+nsec;
+document.getElementById('clockbox').innerHTML=""+nhour+":"+nmin+":"+nsec+ap+"";
+}
+window.onload=function(){
+GetClock();
+setInterval(GetClock,1000);
+}
+</script> 
+
+
+<div class="well" id="menu_font" style="font-size: 20px;" >
+  
+   <center>현재시간 :     <br><%=Time.zone.today%> <p id="clockbox"></p><br>
+  '<%=@class.room_number%>호' 대여 신청서를 작성해주세요.</center>
+</div>
+<br>
+
+<div class="container">
+<div class="row">
+
+<div class="col-md-2"></div>
+<div class="col-md-8">
+  <form class="form-horizontal" action="/book/booking_process/<%=@class.id%>" method="POST">
+     <!--<fieldset>-->
+       <div class="form-group">
+        <label for="inputprofessor" class="col-lg-2 control-label" style="font-size: 20px;" id="menu_font">사용자</label>
+        <div class="col-lg-10">
+          <input type="text" class="form-control" name="user" style="font-size: 20px;" id="menu_font_t" value="<%=current_user.student_name%> (<%=current_user.student_number%>)" disabled>
+
+        </div>
+      </div>
+      
+      <div class="form-group">
+       <label for="inputprofessor" class="col-lg-2 control-label" style="font-size: 20px;" id="menu_font">지도 교수</label>
+        <div class="col-lg-10">
+          <!--학과 선택시 교수가 보임 자바스크립트-->
+          <!--<input type="text" class="form-control" name="professor" style="font-size: 20px;" id="menu_font_t" required>-->
+          <select name="professor">
+            <% @professor.each do |r|%>
+            <option value="volvo"><%=r%></option>
+            <%end%>
+          </select>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="inputdate" class="col-lg-2 control-label" style="font-size: 20px;" id="menu_font">사용 날짜</label>
+        <div class="col-lg-10">
+          <input type="date" class="form-control" name="date" style="font-size: 20px;" id="menu_font_t" required>
+        </div>
+      </div>
+      
+      <div class="form-group">
+         <label for="inputtime" class="col-lg-2 control-label" style="font-size: 20px;" id="menu_font">사용 시간</label>
+        <div class="col-lg-10">
+          <div class="col-lg-5">
+            <input type="time" class="form-control" name="start_time" required style="width: 200px; font-size: 20px;" id="menu_font_t"> 
+          </div>
+          <div class="col-lg-1">
+            <center>~</center>
+          </div>
+          <div class="col-lg-5">
+            <input type="time" class="form-control" name="finish_time" required style="width: 200px; font-size: 20px;" id="menu_font_t"> 
+          </div>
+        </div>
+        
+      </div>
+      
+      <div class="form-group">
+        <label for="inputpurpose" class="col-lg-2 control-label" style="font-size: 20px;" id="menu_font">사용 목적</label>
+        <div class="col-lg-10">
+          <input type="text" class="form-control" name="purpose" style="font-size: 20px;" id="menu_font_t" style="width: 105px; font-size: 20px;" id="menu_font_t"required>
+        </div>
+      </div>
+      
+      <div class="form-group">
+         <label for="select" class="col-lg-2 control-label" style="font-size: 20px;" id="menu_font">예약시 주의사항</label>
+        <div class="col-lg-10">
+          <div style="overflow:auto; width:500px; font-size: 18px;" id="menu_font">
+           <br>사용약관입니다.<br>
+           <br>1. 강의실에서는 간단한 다과 이외의 주류, 외부 음식물은 반입할 수 없습니다. 
+           <br>2. 쓰레기는 강의실에서 나가실 때 가지고 나가셔야 합니다.
+           <br>3. 사용하신 PC는 반드시 끄셔야 합니다. 
+           <br>4. 강의실에 아무도 없을 경우 강의실 불은 반드시 꺼주시기 바랍니다.
+           <br>5. PC가 있는 강의실에는 게임이나 온갖 툴바, 다운로더를 설치하실 수 없습니다.
+           <br>6. 기물파손이나 낙서 등의 피해가 확인되었을 경우에는 불이익이 적용됩니다.
+           <br>7. 소음, 음주, 사행성 등 불건전한 행위 적발시 즉시 퇴실 조치 합니다.
+           <br>8. 퇴실 시 두고가는 물건 없는지 확인하시기 바랍니다. 분실물에 대해서는 책임지지 않으며, 분실물 발견 후 1주일내에 연락이 없으시면 폐기 처리합니다.
+            <br><br>
+            
+          </div><br><br>
+           <input type="checkbox" style="font-size: 20px;" id = "menu_font" required> 동의합니다.<br><br>
+      </div>
+      
+      </div>
+      
+      <div class="form-group">
+        <div class="col-lg-10 col-lg-offset-2"  id ="menu_font">
+          <a href="/book/view_booking?id=<%=@class.id%>&show_date=<%=@date%>"><button type="submit" class="btn btn-default" style="font-size: 18px">Cancel</button></a>
+            <button type="submit" class="btn btn-primary" id="suc" style="font-size: 18px">작성 완료</button>
+        </div>
+      </div>
+      
+    <!--</fieldset>-->
+  </form>
+</center>
+
+<script>
+  $(function() {
+    $("#suc").click(
+      function(){
+        confirm("예약하시겠습니까?");
+      }
+      );
+  });
+</script>
+
+<% if @save_result == "false1" %>
+  <script>
+    alert("지정한 시간에는 이미 예약이 있습니다.");
+  </script>
+    
+<% end %>
+
+<!--<div class="col-md-4"></div>-->
+
+<!--<p>-->
+<!--만약 102호를 클릭하고 예약하기를 클릭하면<br> -->
+<!--예약하는 호수는 102호로 한정하기<br>-->
+<!--<br>-->
+<!--그리고 신청 양식이 있다<br>-->
+<!--사용목적, 사용시간, 깨끗히 사용할 것이며 만약 기물파손시 배상한다는 뭐 그런 서약?(사용약관)<br>-->
+<!--<br>-->
+<!--만약 현재예약되어있는 시간이랑 사용자가 기입한 사용시간이 같으면 경고가 뜨고 다시 폼양식으로 redirect 한다.<br>-->
+<!--예약 완료시 예약완료ㅇ되었다는 alert뜸-->
+<!--</p>-->
+</div>
+<div class="col-md-2"></div>
+
+</div>
+</d
+
+
+
+
+
+
+
+
+
+
